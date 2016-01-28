@@ -62,6 +62,11 @@ class TestTwitterProvider(unittest.TestCase):
             browser.fill('session[password]', os.environ.get('TWITTER_TEST_PASSWORD'))
             browser.find_by_id('allow').click()
 
+            # Twitter may or may not challenge us with an email prompt
+            if browser.url.startswith('https://twitter.com/account/login_challenge'):
+                browser.fill('challenge_response', os.environ.get('TWITTER_TEST_EMAIL'))
+                browser.find_by_id('email_challenge_submit').click()
+
             url = urlparse(browser.url)
 
         args = parse_qs(url[4])
