@@ -11,7 +11,10 @@ setup(
     name    = 'socialauth',
     version = '0.1.0',
 
-    packages = ['socialauth'],
+    packages = [
+        'socialauth',
+        'socialauth.providers',
+    ],
 
     description = 'A framework- and backend-independent social login provider.',
     long_description = long_description,
@@ -22,6 +25,12 @@ setup(
     author_email = 'me@emilyhorsman.com',
 
     license = 'MIT',
+
+    install_requires = [
+        'httplib2>=0.9.2',
+        'oauth2>=1.9.0.post1',
+        'PyJWT>=1.4.0'
+    ],
 
     classifiers = [
         'Development Status :: 4 - Beta',
