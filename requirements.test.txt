@@ -1,0 +1,5 @@
+-r requirements.txt
+coverage==4.0.3
+python-coveralls==2.6.0
+splinter==0.7.3
+selenium==2.50.0
