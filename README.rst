@@ -1,6 +1,12 @@
 Python Social Auth
 ==================
 
+.. image:: https://travis-ci.org/emilyhorsman/socialauth.svg?branch=master
+    :target: https://travis-ci.org/emilyhorsman/socialauth
+
+.. image:: https://coveralls.io/repos/github/emilyhorsman/socialauth/badge.svg?branch=master
+    :target: https://coveralls.io/github/emilyhorsman/socialauth?branch=master
+
 .. image:: https://img.shields.io/pypi/v/socialauth.svg
     :target: https://pypi.python.org/pypi/socialauth
 
