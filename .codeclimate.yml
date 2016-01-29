@@ -13,7 +13,7 @@ engines:
 
 ratings:
     paths:
-        - "socialauth"
+        - "socialauth/**/*.py"
 
 exclude_paths:
     - tests.py
