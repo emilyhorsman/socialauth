@@ -7,6 +7,7 @@ import jwt
 from socialauth import Error
 from socialauth import InvalidUsage
 
+
 class Facebook:
     def __init__(self, request_url, params, token_secret, token_cookie):
         self.request_url  = request_url
@@ -44,8 +45,7 @@ class Facebook:
 
     def finish(self):
         self.get_access_token()
-        self.get_user_id()
-        self.get_user_name()
+        self.get_user_information()
 
         if self.user_id is not None:
             self.status = 200
@@ -58,8 +58,8 @@ class Facebook:
             self.client_secret,
             self.params.get('code'))
 
-        url  = 'https://graph.facebook.com/{}/oauth/access_token?{}'
-        url  = url.format(self.api_version, qs)
+        url = 'https://graph.facebook.com/{}/oauth/access_token?{}'
+        url = url.format(self.api_version, qs)
 
         resp, content = httplib2.Http().request(url, 'GET')
         if resp.status != 200:
@@ -73,11 +73,8 @@ class Facebook:
         self.access_token = access_token
         return access_token
 
-    def get_user_id(self):
-        if self.access_token is None:
-            raise Error('Must obtain access token with get_access_token first')
-
-        url = 'https://graph.facebook.com/me?fields=id&access_token={}'
+    def get_user_information(self):
+        url = 'https://graph.facebook.com/me?fields=id,name&access_token={}'
         url = url.format(self.access_token, self.access_token)
 
         resp, content = httplib2.Http().request(url, 'GET')
@@ -85,27 +82,9 @@ class Facebook:
             raise Error('{} from Facebook'.format(resp.status))
 
         res = json.loads(content.decode('utf-8'))
-        user_id = res.get('id', None)
-        if not user_id:
+        self.user_id = res.get('id', None)
+        if not self.user_id:
             raise Error('No user ID from Facebook')
 
-        self.user_id = user_id
-        return user_id
-
-    def get_user_name(self):
-        if self.access_token is None:
-            raise Error('Must obtain access token with get_access_token first')
-
-        if self.user_id is None:
-            raise Error('Must obtain user ID with get_user_id first')
-
-        url = 'https://graph.facebook.com/{}/{}?access_token={}'
-        url = url.format(self.api_version, self.user_id, self.access_token)
-
-        resp, content = httplib2.Http().request(url, 'GET')
-        if resp.status != 200:
-            return None
-
-        res = json.loads(content.decode('utf-8'))
-        self.name = res.get('name', None)
-        return self.name
+        self.user_name = res.get('name', None)
+        return (self.user_id, self.user_name)

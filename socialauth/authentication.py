@@ -34,4 +34,4 @@ def http_get_provider(provider,
 
         return ret
 
-    raise InvalidUsage('Invalid request') # pragma: no cover
+    raise InvalidUsage('Invalid request')  # pragma: no cover

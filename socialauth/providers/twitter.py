@@ -12,8 +12,8 @@ class Twitter:
     def __init__(self, request_url, params, token_secret, token_cookie):
         self.request_url  = request_url
         self.params       = params
-        self.token_cookie = token_cookie
         self.token_secret = token_secret
+        self.token_cookie = token_cookie
 
         self.status             = False
         self.user_id            = None
@@ -38,7 +38,7 @@ class Twitter:
 
         if params.get('login') == 'start':
             self.start()
-        elif 'oauth_verifier' in params and 'oauth_token' in params:
+        elif self.oauth_verifier and self.oauth_token:
             self.finish()
         else:
             raise InvalidUsage('Invalid request')
@@ -48,29 +48,23 @@ class Twitter:
         self.get_redirect_with_token()
 
     def finish(self):
-        if self.oauth_verifier is None:
-            raise Error('No oauth_verifier')
-
-        if self.oauth_token is None:
-            raise Error('No oauth_token')
-
         self.decode_oauth_token_secret()
         self.get_user_information()
 
     def decode_oauth_token_secret(self):
-        if self.token_cookie is None:
+        if not self.token_cookie:
             raise Error('No token cookie given')
 
         try:
             payload = jwt.decode(self.token_cookie,
                                  self.token_secret,
                                  algorithm = 'HS256')
-            if payload['data']['type'] != 'oauth_token_secret':
-                raise Error('Token does not have an oauth_token_secret in it')
-
-            self.oauth_token_secret = payload['data']['id']
         except:
             raise Error('Failed to retrieve oauth_token_secret from token')
+
+        self.oauth_token_secret = payload.get('data', {}).get('id', None)
+        if not self.oauth_token_secret:
+            raise Error('Token does not have an oauth_token_secret')
 
         return self.oauth_token_secret
 
@@ -109,12 +103,6 @@ class Twitter:
         return (self.oauth_token, self.oauth_token_secret,)
 
     def get_redirect_with_token(self):
-        if self.oauth_token is None:
-            raise Error('Must obtain oauth_token with get_initial_oauth_tokens first')
-
-        if self.oauth_token_secret is None:
-            raise Error('Must obtain oauth_token_secret with get_initial_oauth_tokens first')
-
         url = 'https://api.twitter.com/oauth/authenticate?oauth_token={}'
         url = url.format(self.oauth_token)
 

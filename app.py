@@ -12,6 +12,7 @@ dotenv.load_dotenv('.env')
 
 app = Flask(__name__)
 
+
 @app.route('/whoami')
 def whoami():
     # User IDs are likely protected values, so exposing this value wouldn't

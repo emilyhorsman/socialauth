@@ -13,10 +13,10 @@ class InvalidUsage(Exception):
         self.message     = message
         self.status_code = status_code
 
-    def __str__(self): # pragma: no cover
+    def __str__(self):  # pragma: no cover
         return '({}) {}'.format(repr(self.status_code), repr(self.message))
 
-    def to_dict(self): # pragma: no cover
+    def to_dict(self):  # pragma: no cover
         return {
             'errors': [{
                 'status': self.status_code,
