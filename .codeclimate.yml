@@ -1,0 +1,19 @@
+engines:
+    duplication:
+        enabled: true
+        config:
+            languages:
+                - python
+    radon:
+        enabled: true
+        config:
+            python_version: 3
+    pep8:
+        enabled: true
+
+ratings:
+    paths:
+        - "socialauth"
+
+exclude_paths:
+    - tests.py

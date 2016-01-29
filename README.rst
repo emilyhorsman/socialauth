@@ -3,20 +3,30 @@ Python Social Auth
 
 .. image:: https://travis-ci.org/emilyhorsman/socialauth.svg?branch=master
     :target: https://travis-ci.org/emilyhorsman/socialauth
+    :alt: Travis CI
 
 .. image:: https://coveralls.io/repos/github/emilyhorsman/socialauth/badge.svg?branch=master
     :target: https://coveralls.io/github/emilyhorsman/socialauth?branch=master
+    :alt: Coveralls Test Coverage
+
+.. image:: https://codeclimate.com/github/emilyhorsman/socialauth/badges/gpa.svg
+    :target: https://codeclimate.com/github/emilyhorsman/socialauth
+    :alt: Code Climate
 
 .. image:: https://img.shields.io/pypi/v/socialauth.svg
     :target: https://pypi.python.org/pypi/socialauth
+    :alt: PyPI
 
 .. image:: https://img.shields.io/badge/python-%E2%89%A5%203.3-blue.svg
     :target: https://docs.python.org/3/
+    :alt: Python >= 3.3
 
 .. image:: https://img.shields.io/badge/code%20of%20conduct-v1.3.0-4C1161.svg
     :target: CODE_OF_CONDUCT.md
+    :alt: Contributor Covenant Code of Conduct
 
 .. image:: https://img.shields.io/pypi/l/socialauth.svg
+    :alt: MIT License
 
 
 A generic library to authenticate with login providers such as Twitter and Facebook.
