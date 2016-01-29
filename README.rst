@@ -29,58 +29,39 @@ Python Social Auth
     :alt: MIT License
 
 
-A generic library to authenticate with login providers such as Twitter and Facebook.
-
-.. code-block::
-
-    $ pip install socialauth
-
-Flask Example
-=============
-
-.. code-block:: python
-
-    @app.route('/whoami')
-    def whoami():
-        res = jwt.decode(request.cookies.get('jwt'), current_app.secret_key)
-        return res.get('user_id')
-
-
-    @app.route('/auth/<provider>')
-    def authenticate(provider):
-        res = socialauth.http_get_provider(
-            provider,
-            request.base_url,
-            request.args,
-            current_app.secret_key,
-            request.cookies.get('jwt')
-        )
-
-        if res.get('status') == 302:
-            resp = make_response(redirect(res.get('redirect')))
-            if res.get('set_token_cookie') is not None:
-                resp.set_cookie('jwt', res.get('set_token_cookie'))
-
-            return resp
-
-        if res.get('status') == 200:
-            resp = make_response(jsonify({ 'status': 'success' }))
-            resp.set_cookie('jwt', res.get('set_token_cookie'))
-            return resp
-
-        abort(400)
-
-Current Providers
-=================
-
-* Twitter
-* Facebook
-
-Why?
-====
+A library for social sign-in capability from providers such as Twitter and
+Facebook.
 
 Many social authentication solutions exist. I wanted something that didn’t
 have strong ties to an HTTP framework or storage backend. Preferably, I
 didn’t want something that dealt with a storage backend at all. This library
 uses JSON web tokens instead of sessions to deal with intermediate information
 in the OAuth flow (such as a token secret).
+
+.. code-block:: bash
+
+    $ pip install socialauth
+
+
+
+Run Tests
+=========
+
+.. code-block:: bash
+
+    $ git clone https://github.com/emilyhorsman/socialauth.git
+    $ mkvirtualenv --python=python3 socialauth
+    $ cd socialauth
+    $ workon .
+    $ pip install -r requirements.test.txt
+    $ python tests.py
+
+Build Docs
+==========
+
+.. code-block:: bash
+
+    $ pip install -r requirements.docs.txt
+    $ cd docs
+    $ make html
+

@@ -12,6 +12,26 @@ def validate_provider(provider):
 
 def http_get_provider(provider,
                       request_url, params, token_secret, token_cookie = None):
+    '''Handle HTTP GET requests on an authentication endpoint.
+
+    Authentication flow begins when ``params`` has a ``login`` key with a value
+    of ``start``. For instance, ``/auth/twitter?login=start``.
+
+    :param str provider: An provider to obtain a user ID from.
+    :param str request_url: The authentication endpoint/callback.
+    :param dict params: GET parameters from the query string.
+    :param str token_secret: An app secret to encode/decode JSON web tokens.
+    :param str token_cookie: The current JSON web token, if available.
+    :return: A dict containing any of the following possible keys:
+
+        ``status``: an HTTP status code the server should sent
+
+        ``redirect``: where the client should be directed to continue the flow
+
+        ``set_token_cookie``: contains a JSON web token and should be stored by
+        the client and passed in the next call.
+    '''
+
     if not validate_provider(provider):
         raise InvalidUsage('Provider not supported')
 
