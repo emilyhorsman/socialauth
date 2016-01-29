@@ -9,6 +9,10 @@ Python Social Auth
     :target: https://coveralls.io/github/emilyhorsman/socialauth?branch=master
     :alt: Coveralls Test Coverage
 
+.. image:: https://readthedocs.org/projects/socialauth/badge/?version=latest
+    :target: http://socialauth.readthedocs.org/en/latest/?badge=latest
+    :alt: Documentation Status
+
 .. image:: https://codeclimate.com/github/emilyhorsman/socialauth/badges/gpa.svg
     :target: https://codeclimate.com/github/emilyhorsman/socialauth
     :alt: Code Climate
