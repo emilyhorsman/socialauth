@@ -17,7 +17,7 @@ the same :func:`socialauth.http_get_provider` call.
 
 .. literalinclude:: ../app.py
     :language: python
-    :emphasize-lines: 31-39,44,50
+    :emphasize-lines: 31-39,44,52
     :linenos:
 
 

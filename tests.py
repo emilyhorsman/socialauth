@@ -167,10 +167,8 @@ class TestTwitterProvider(unittest.TestCase):
         res = self.get_provider(args, res['set_token_cookie'])
 
         self.assertEqual(res['status'], 200)
-        self.assertEqual(res['user_name'], 'test')
-
-        payload = jwt.decode(res['set_token_cookie'], 'sekret', algorithm = 'HS256')
-        self.assertEqual(payload['user_id'], '987')
+        self.assertEqual(res['provider_user_id'], '987')
+        self.assertEqual(res['provider_user_name'], 'test')
 
 
 class TestFacebookProvider(unittest.TestCase):
@@ -237,8 +235,8 @@ class TestFacebookProvider(unittest.TestCase):
 
         res = self.get_provider({ 'code': 'foo' })
         self.assertEqual(res['status'], 200)
-        payload = jwt.decode(res['set_token_cookie'], 'sekret', algorithm = 'HS256')
-        self.assertEqual(payload['user_id'], '987')
+        self.assertEqual(res['provider_user_id'], '987')
+        self.assertEqual(res['provider_user_name'], 'test')
 
 
 if __name__ == '__main__':

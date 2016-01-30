@@ -32,10 +32,10 @@ def whoami():
 def authenticate(provider):
     res = socialauth.http_get_provider(
         provider,
-        request.base_url,          # Callback URL
-        request.args,              # GET parameters/query string
+        request.base_url,           # Callback URL
+        request.args,               # GET parameters/query string
         current_app.secret_key,
-        request.cookies.get('jwt') # Currently stored token
+        request.cookies.get('jwt')  # Currently stored token
     )
 
     if res.get('status') == 302:
@@ -47,7 +47,14 @@ def authenticate(provider):
 
     if res.get('status') == 200:
         resp = make_response(jsonify({ 'status': 'success' }))
-        resp.set_cookie('jwt', res.get('set_token_cookie'), httponly = True)
+
+        token = jwt.encode(
+            { 'user_id': res.get('provider_user_id') },
+            current_app.secret_key,
+            algorithm = 'HS256'
+        )
+        resp.set_cookie('jwt', token, httponly = True)
+
         return resp
 
     # Something has gone very wrong. This should not happen.

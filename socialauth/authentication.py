@@ -3,6 +3,7 @@ import jwt
 import socialauth.providers
 from . import InvalidUsage
 
+
 def validate_provider(provider):
     return provider in (
         'twitter',
@@ -30,6 +31,10 @@ def http_get_provider(provider,
 
         ``set_token_cookie``: contains a JSON web token and should be stored by
         the client and passed in the next call.
+
+        ``provider_user_id``: the user ID from the login provider
+
+        ``provider_user_name``: the user name from the login provider
     '''
 
     if not validate_provider(provider):
@@ -46,11 +51,9 @@ def http_get_provider(provider,
         return ret
 
     if provider.status == 200 and provider.user_id is not None:
-        payload = dict(user_id = provider.user_id)
-        token   = jwt.encode(payload, token_secret, algorithm = 'HS256')
-        ret     = dict(status = 200, set_token_cookie = token)
+        ret = dict(status = 200, provider_user_id = provider.user_id)
         if provider.user_name is not None:
-            ret['user_name'] = provider.user_name
+            ret['provider_user_name'] = provider.user_name
 
         return ret
 
