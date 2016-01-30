@@ -25,7 +25,7 @@ Python Social Auth
     :target: https://docs.python.org/3/
     :alt: Python >= 3.3
 
-.. image:: https://img.shields.io/badge/code%20of%20conduct-v1.3.0-4C1161.svg
+.. image:: https://img.shields.io/badge/code%20of%20conduct-v1.4.0-4C1161.svg
     :target: CODE_OF_CONDUCT.md
     :alt: Contributor Covenant Code of Conduct
 
